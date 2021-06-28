@@ -22,5 +22,5 @@ package net.unknowndomain.alea.systems.m2d20;
 public enum M2D20Modifiers
 {
     VERBOSE,
-    ONE_ALWAYS_CRITICAL
+    ONE_NOT_AUTOCRIT
 }

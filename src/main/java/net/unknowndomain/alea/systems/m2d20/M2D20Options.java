@@ -26,8 +26,8 @@ public class M2D20Options extends RpgSystemOptions
     private Integer focus;
     @RpgSystemOption(name = "bonus", shortcode = "b", description = "2d20.options.bonus", argName = "bonusDice")
     private Integer bonus;
-//    @RpgSystemOption(name = "reroll", shortcode = "r", description = "7thsea.options.reroll")
-//    private boolean reroll;
+    @RpgSystemOption(name = "old", shortcode = "o", description = "2d20.options.oldMode")
+    private boolean oldMode;
 //    @RpgSystemOption(name = "double", shortcode = "d", description = "7thsea.options.double")
 //    private boolean doubleIncrement;
 //    @RpgSystemOption(name = "explode", shortcode = "x", description = "7thsea.options.explode")
@@ -56,10 +56,10 @@ public class M2D20Options extends RpgSystemOptions
         return bonus;
     }
 
-//    public boolean isReroll()
-//    {
-//        return reroll;
-//    }
+    public boolean isOldMode()
+    {
+        return oldMode;
+    }
 //
 //    public boolean isDoubleIncrement()
 //    {
@@ -83,10 +83,10 @@ public class M2D20Options extends RpgSystemOptions
         {
             mods.add(M2D20Modifiers.VERBOSE);
         }
-//        if (isReroll())
-//        {
-//            mods.add(S7thSea2Modifiers.REROLL_LEFTOVER);
-//        }
+        if (isOldMode())
+        {
+            mods.add(M2D20Modifiers.ONE_NOT_AUTOCRIT);
+        }
 //        if (isDoubleIncrement())
 //        {
 //            mods.add(S7thSea2Modifiers.DOUBLE_INCREMENT);

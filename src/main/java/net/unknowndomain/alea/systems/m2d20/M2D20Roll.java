@@ -65,10 +65,10 @@ public class M2D20Roll implements GenericRoll
             }
             dice += b;
         }
-        int f = 0;
-        if (mods.contains(M2D20Modifiers.ONE_ALWAYS_CRITICAL))
+        int f = 1;
+        if (mods.contains(M2D20Modifiers.ONE_NOT_AUTOCRIT))
         {
-            f = 1;
+            f = 0;
         }
         if (focus != null)
         {
