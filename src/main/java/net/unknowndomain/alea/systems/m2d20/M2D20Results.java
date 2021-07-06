@@ -33,6 +33,7 @@ public class M2D20Results extends GenericResult
     private int successes = 0;
     private int complication = 0;
     private List<String> usedDice = new ArrayList<>();
+    private List<Integer> assistDice = new ArrayList<>();
     private M2D20Results prev;
     
     public M2D20Results(List<Integer> results)
@@ -131,6 +132,12 @@ public class M2D20Results extends GenericResult
                 messageBuilder.append(t).append(" ");
             }
             messageBuilder.append("]\n");
+            messageBuilder.append(indent).append("Assistance Results: ").append(" [ ");
+            for (Integer t : getAssistDice())
+            {
+                messageBuilder.append(t).append(" ");
+            }
+            messageBuilder.append("]\n");
             if (prev != null)
             {
                 messageBuilder.append("Prev : {\n");
@@ -143,6 +150,16 @@ public class M2D20Results extends GenericResult
     public int getComplication()
     {
         return complication;
+    }
+
+    public List<Integer> getAssistDice()
+    {
+        return assistDice;
+    }
+
+    public void setAssistDice(List<Integer> assistDice)
+    {
+        this.assistDice = assistDice;
     }
 
 }

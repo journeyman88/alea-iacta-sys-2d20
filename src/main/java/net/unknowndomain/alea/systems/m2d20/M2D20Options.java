@@ -5,8 +5,10 @@
  */
 package net.unknowndomain.alea.systems.m2d20;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import net.unknowndomain.alea.systems.RpgSystemOptions;
 import net.unknowndomain.alea.systems.annotations.RpgSystemData;
@@ -28,17 +30,29 @@ public class M2D20Options extends RpgSystemOptions
     private Integer bonus;
     @RpgSystemOption(name = "old", shortcode = "o", description = "2d20.options.oldMode")
     private boolean oldMode;
-//    @RpgSystemOption(name = "double", shortcode = "d", description = "7thsea.options.double")
-//    private boolean doubleIncrement;
+    @RpgSystemOption(name = "assistant", shortcode = "a", description = "2d20.options.assistant", argName = "assistantTarget")
+    private List<String> assistants;
+    @RpgSystemOption(name = "determination", shortcode = "d", description = "2d20.options.determination", argName = "determinationSpent")
+    private Integer determination;
+    @RpgSystemOption(name = "challenge", shortcode = "c", description = "2d20.options.challenge")
+    private Integer challenge;
 //    @RpgSystemOption(name = "explode", shortcode = "x", description = "7thsea.options.explode")
 //    private boolean explode;
-//    @RpgSystemOption(name = "increase", shortcode = "i", description = "7thsea.options.increase")
-//    private boolean increase;
     
     @Override
     public boolean isValid()
     {
-        return !(isHelp() || (target == null));
+        return !(isHelp() || !(isBasic() ^ isChallenge()));
+    }
+    
+    public boolean isBasic()
+    {
+        return (target != null);
+    }
+    
+    public boolean isChallenge()
+    {
+        return (challenge != null);
     }
 
     public Integer getTarget()
@@ -60,21 +74,6 @@ public class M2D20Options extends RpgSystemOptions
     {
         return oldMode;
     }
-//
-//    public boolean isDoubleIncrement()
-//    {
-//        return doubleIncrement;
-//    }
-//
-//    public boolean isExplode()
-//    {
-//        return explode;
-//    }
-//
-//    public boolean isIncrease()
-//    {
-//        return increase;
-//    }
 
     public Collection<M2D20Modifiers> getModifiers()
     {
@@ -87,19 +86,47 @@ public class M2D20Options extends RpgSystemOptions
         {
             mods.add(M2D20Modifiers.ONE_NOT_AUTOCRIT);
         }
-//        if (isDoubleIncrement())
-//        {
-//            mods.add(S7thSea2Modifiers.DOUBLE_INCREMENT);
-//        }
-//        if (isExplode())
-//        {
-//            mods.add(S7thSea2Modifiers.EXPLODING_DICE);
-//        }
-//        if (isIncrease())
-//        {
-//            mods.add(S7thSea2Modifiers.INCREASED_DIFFICULTY);
-//        }
         return mods;
+    }
+
+    public List<String> getAssistants()
+    {
+        return assistants;
+    }
+
+    public void setAssistants(List<String> assistants)
+    {
+        this.assistants = assistants;
+    }
+
+    public Integer getDetermination()
+    {
+        return determination;
+    }
+
+    public void setDetermination(Integer determination)
+    {
+        this.determination = determination;
+    }
+    
+    public List<Integer> parseAssistants()
+    {
+        List<Integer> ass = new ArrayList<>(assistants.size());
+        for (String a : assistants)
+        {
+            ass.add(Integer.parseInt(a));
+        }
+        return ass;
+    }
+
+    public Integer getChallenge()
+    {
+        return challenge;
+    }
+
+    public void setChallenge(Integer challenge)
+    {
+        this.challenge = challenge;
     }
     
 }

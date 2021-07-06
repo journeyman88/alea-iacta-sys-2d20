@@ -37,13 +37,15 @@ public class M2D20Roll implements GenericRoll
     private final Set<M2D20Modifiers> mods;
     private final int targetNumber;
     private final int focus;
+    private final int determination;
+    private final List<Integer> assistants;
     
-    public M2D20Roll(Integer targetNumber, Integer focus, Integer bonus, M2D20Modifiers ... mod)
+    public M2D20Roll(Integer targetNumber, Integer focus, Integer bonus, Integer determination, List<Integer> assistants, M2D20Modifiers ... mod)
     {
-        this(targetNumber, focus, bonus, Arrays.asList(mod));
+        this(targetNumber, focus, bonus, determination, assistants, Arrays.asList(mod));
     }
     
-    public M2D20Roll(Integer targetNumber, Integer focus, Integer bonus, Collection<M2D20Modifiers> mod)
+    public M2D20Roll(Integer targetNumber, Integer focus, Integer bonus, Integer determination, List<Integer> assistants, Collection<M2D20Modifiers> mod)
     {
         
         this.mods = new HashSet<>();
@@ -65,6 +67,21 @@ public class M2D20Roll implements GenericRoll
             }
             dice += b;
         }
+        int d = 0;
+        if (determination != null)
+        {
+            d = determination;
+            if (d < 0)
+            {
+                d = 0;
+            }
+            if (d > 3)
+            {
+                d = 3;
+            }
+            dice -= d;
+        }
+        this.determination = d;
         int f = 1;
         if (mods.contains(M2D20Modifiers.ONE_NOT_AUTOCRIT))
         {
@@ -77,16 +94,19 @@ public class M2D20Roll implements GenericRoll
         this.dicePool = new DicePool<>(D20.INSTANCE, dice);
         this.focus = f;
         this.targetNumber = targetNumber;
+        this.assistants = assistants;
     }
     
     @Override
     public GenericResult getResult()
     {
         List<Integer> resultsPool = this.dicePool.getResults();
-        List<Integer> res = new ArrayList<>();
-        res.addAll(resultsPool);
+        for(int i = 0; i< determination; i++)
+        {
+            resultsPool.add(0,1);
+        }
         M2D20Results results = new M2D20Results(resultsPool);
-        for (Integer r : res)
+        for (Integer r : resultsPool)
         {
             if ((r <= targetNumber) && ( r > focus))
             {
@@ -101,6 +121,22 @@ public class M2D20Roll implements GenericRoll
                 results.addComplication();
             }
             
+        }
+        if ((assistants != null) && (results.getSuccesses() > 0))
+        {
+            for (Integer ta : assistants)
+            {
+                int r = D20.INSTANCE.roll();
+                results.getAssistDice().add(r);
+                if (r <= ta)
+                {
+                    results.addSuccess(r);
+                }
+                if (r == 20)
+                {
+                    results.addComplication();
+                }
+            }
         }
         results.setVerbose(mods.contains(M2D20Modifiers.VERBOSE));
         return results;
