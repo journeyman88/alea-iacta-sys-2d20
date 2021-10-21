@@ -15,14 +15,14 @@
  */
 package net.unknowndomain.alea.systems.m2d20;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import net.unknowndomain.alea.dice.standard.D20;
-import net.unknowndomain.alea.pools.DicePool;
+import net.unknowndomain.alea.random.SingleResult;
+import net.unknowndomain.alea.random.dice.DicePool;
+import net.unknowndomain.alea.random.dice.bag.D20;
 import net.unknowndomain.alea.roll.GenericResult;
 import net.unknowndomain.alea.roll.GenericRoll;
 
@@ -100,23 +100,23 @@ public class M2D20Roll implements GenericRoll
     @Override
     public GenericResult getResult()
     {
-        List<Integer> resultsPool = this.dicePool.getResults();
+        List<SingleResult<Integer>> resultsPool = this.dicePool.getResults();
         for(int i = 0; i< determination; i++)
         {
-            resultsPool.add(0,1);
+            resultsPool.add(0,new SingleResult<>("d20", 1));
         }
         M2D20Results results = new M2D20Results(resultsPool);
-        for (Integer r : resultsPool)
+        for (SingleResult<Integer> r : resultsPool)
         {
-            if ((r <= targetNumber) && ( r > focus))
+            if ((r.getValue() <= targetNumber) && ( r.getValue() > focus))
             {
                 results.addSuccess(r);
             }
-            if ((r <= targetNumber) && ( r <= focus))
+            if ((r.getValue() <= targetNumber) && ( r.getValue() <= focus))
             {
                 results.addCriticalSuccess(r);
             }
-            if (r == 20)
+            if (r.getValue() == 20)
             {
                 results.addComplication();
             }
@@ -126,13 +126,13 @@ public class M2D20Roll implements GenericRoll
         {
             for (Integer ta : assistants)
             {
-                int r = D20.INSTANCE.roll();
+                SingleResult<Integer> r = D20.INSTANCE.nextResult().get();
                 results.getAssistDice().add(r);
-                if (r <= ta)
+                if (r.getValue() <= ta)
                 {
                     results.addSuccess(r);
                 }
-                if (r == 20)
+                if (r.getValue() == 20)
                 {
                     results.addComplication();
                 }

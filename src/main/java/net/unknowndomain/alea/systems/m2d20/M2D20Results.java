@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import net.unknowndomain.alea.messages.MsgBuilder;
+import net.unknowndomain.alea.random.SingleResult;
 import net.unknowndomain.alea.roll.GenericResult;
 
 /**
@@ -29,26 +30,26 @@ import net.unknowndomain.alea.roll.GenericResult;
  */
 public class M2D20Results extends GenericResult
 {
-    private final List<Integer> results;
+    private final List<SingleResult<Integer>> results;
     private int successes = 0;
     private int complication = 0;
-    private List<String> usedDice = new ArrayList<>();
-    private List<Integer> assistDice = new ArrayList<>();
+    private List<SingleResult<Integer>> successDice = new ArrayList<>();
+    private List<SingleResult<Integer>> assistDice = new ArrayList<>();
     private M2D20Results prev;
     
-    public M2D20Results(List<Integer> results)
+    public M2D20Results(List<SingleResult<Integer>> results)
     {
-        List<Integer> tmp = new ArrayList<>(results.size());
+        List<SingleResult<Integer>> tmp = new ArrayList<>(results.size());
         tmp.addAll(results);
         this.results = Collections.unmodifiableList(tmp);
     }
     
-    private void addSuccesses(int value, Integer ... dice)
+    private void addSuccesses(int value, SingleResult<Integer> ... dice)
     {
         this.addSuccesses(value, Arrays.asList(dice));
     }
     
-    public void addSuccess(Integer ... dice)
+    public void addSuccess(SingleResult<Integer> ... dice)
     {
         addSuccesses(1, dice);
     }
@@ -58,33 +59,23 @@ public class M2D20Results extends GenericResult
         complication ++;
     }
     
-    public void addCriticalSuccess(Integer ... dice)
+    public void addCriticalSuccess(SingleResult<Integer> ... dice)
     {
         addSuccesses(2, dice);
     }
     
-    private void addSuccesses(int value, Collection<Integer> dice)
+    private void addSuccesses(int value, Collection<SingleResult<Integer>> dice)
     {
         successes += value;
-        StringBuilder sb = new StringBuilder("(");
-        for (Integer d : dice)
-        {
-            if (sb.length() >= 2)
-            {
-                sb.append("+");
-            }
-            sb.append(d);
-        }
-        sb.append(")");
-        usedDice.add(sb.toString());
+        successDice.addAll(dice);
     }
     
-    public void addSuccess(Collection<Integer> dice)
+    public void addSuccess(Collection<SingleResult<Integer>> dice)
     {
         addSuccesses(1, dice);
     }
     
-    public void addCriticalSuccess(Collection<Integer> dice)
+    public void addCriticalSuccess(Collection<SingleResult<Integer>> dice)
     {
         addSuccesses(2, dice);
     }
@@ -94,12 +85,12 @@ public class M2D20Results extends GenericResult
         return successes;
     }
 
-    public List<String> getUsedDice()
+    public List<SingleResult<Integer>> getSuccessDice()
     {
-        return usedDice;
+        return successDice;
     }
 
-    public List<Integer> getResults()
+    public List<SingleResult<Integer>> getResults()
     {
         return results;
     }
@@ -127,15 +118,17 @@ public class M2D20Results extends GenericResult
         {
             messageBuilder.append(indent).append("Roll ID: ").append(getUuid()).appendNewLine();
             messageBuilder.append(indent).append("Results: ").append(" [ ");
-            for (Integer t : getResults())
+            for (SingleResult<Integer> t : getResults())
             {
-                messageBuilder.append(t).append(" ");
+                messageBuilder.append("( ").append(t.getLabel()).append(" => ");
+                messageBuilder.append(t.getValue()).append(") ");
             }
             messageBuilder.append("]\n");
             messageBuilder.append(indent).append("Assistance Results: ").append(" [ ");
-            for (Integer t : getAssistDice())
+            for (SingleResult<Integer> t : getAssistDice())
             {
-                messageBuilder.append(t).append(" ");
+                messageBuilder.append("( ").append(t.getLabel()).append(" => ");
+                messageBuilder.append(t.getValue()).append(") ");
             }
             messageBuilder.append("]\n");
             if (prev != null)
@@ -152,12 +145,12 @@ public class M2D20Results extends GenericResult
         return complication;
     }
 
-    public List<Integer> getAssistDice()
+    public List<SingleResult<Integer>> getAssistDice()
     {
         return assistDice;
     }
 
-    public void setAssistDice(List<Integer> assistDice)
+    public void setAssistDice(List<SingleResult<Integer>> assistDice)
     {
         this.assistDice = assistDice;
     }

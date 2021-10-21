@@ -21,9 +21,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import net.unknowndomain.alea.dice.standard.D20;
-import net.unknowndomain.alea.dice.standard.D6;
-import net.unknowndomain.alea.pools.DicePool;
+import net.unknowndomain.alea.random.SingleResult;
+import net.unknowndomain.alea.random.dice.DicePool;
+import net.unknowndomain.alea.random.dice.bag.D6;
 import net.unknowndomain.alea.roll.GenericResult;
 import net.unknowndomain.alea.roll.GenericRoll;
 
@@ -57,15 +57,15 @@ public class M2D20ChallengeRoll implements GenericRoll
     @Override
     public GenericResult getResult()
     {
-        List<Integer> resultsPool = this.dicePool.getResults();
+        List<SingleResult<Integer>> resultsPool = this.dicePool.getResults();
         M2D20ChallengeResults results = new M2D20ChallengeResults(resultsPool);
-        for (Integer r : resultsPool)
+        for (SingleResult<Integer> r : resultsPool)
         {
-            if (r <= 2)
+            if (r.getValue() <= 2)
             {
-                results.addValue(r);
+                results.addValue(r.getValue());
             }
-            if (r >= 5)
+            if (r.getValue() >= 5)
             {
                 results.addOneAndEffect();
             }

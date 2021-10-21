@@ -8,6 +8,7 @@ package net.unknowndomain.alea.systems.m2d20;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import net.unknowndomain.alea.systems.RpgSystemOptions;
@@ -111,10 +112,13 @@ public class M2D20Options extends RpgSystemOptions
     
     public List<Integer> parseAssistants()
     {
-        List<Integer> ass = new ArrayList<>(assistants.size());
-        for (String a : assistants)
+        List<Integer> ass = new LinkedList<>();
+        if (assistants != null)
         {
-            ass.add(Integer.parseInt(a));
+            for (String a : assistants)
+            {
+                ass.add(Integer.parseInt(a));
+            }
         }
         return ass;
     }
