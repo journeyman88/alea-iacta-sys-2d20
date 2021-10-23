@@ -20,22 +20,22 @@ import net.unknowndomain.alea.systems.annotations.RpgSystemOption;
  *
  * @author journeyman
  */
-@RpgSystemData(bundleName = "net.unknowndomain.alea.systems.m2d20.RpgSystemBundle")
+@RpgSystemData(bundleName = "net.unknowndomain.alea.systems.m2d20.RpgSystemBundle", groupsName = {"challenge","skill"}, groupsDesc = {"Challenge Roll", "Skill Roll"})
 public class M2D20Options extends RpgSystemOptions
 {
-    @RpgSystemOption(name = "target", shortcode = "t", description = "2d20.options.targetNumber", argName = "targetNumber")
+    @RpgSystemOption(name = "target", shortcode = "t", description = "2d20.options.targetNumber", argName = "targetNumber", groupName = "skill", groupRequired = true)
     private Integer target;
-    @RpgSystemOption(name = "focus", shortcode = "f", description = "2d20.options.focus", argName = "focusValue")
+    @RpgSystemOption(name = "focus", shortcode = "f", description = "2d20.options.focus", argName = "focusValue", groupName = "skill")
     private Integer focus;
-    @RpgSystemOption(name = "bonus", shortcode = "b", description = "2d20.options.bonus", argName = "bonusDice")
+    @RpgSystemOption(name = "bonus", shortcode = "b", description = "2d20.options.bonus", argName = "bonusDice", groupName = "skill")
     private Integer bonus;
-    @RpgSystemOption(name = "old", shortcode = "o", description = "2d20.options.oldMode")
+    @RpgSystemOption(name = "old", shortcode = "o", description = "2d20.options.oldMode", groupName = "skill")
     private boolean oldMode;
-    @RpgSystemOption(name = "assistant", shortcode = "a", description = "2d20.options.assistant", argName = "assistantTarget")
+    @RpgSystemOption(name = "assistant", shortcode = "a", description = "2d20.options.assistant", argName = "assistantTarget", groupName = "skill")
     private List<String> assistants;
-    @RpgSystemOption(name = "determination", shortcode = "d", description = "2d20.options.determination", argName = "determinationSpent")
+    @RpgSystemOption(name = "determination", shortcode = "d", description = "2d20.options.determination", argName = "determinationSpent", groupName = "skill")
     private Integer determination;
-    @RpgSystemOption(name = "challenge", shortcode = "c", description = "2d20.options.challenge")
+    @RpgSystemOption(name = "challenge", shortcode = "c", description = "2d20.options.challenge", groupName = "challenge", groupRequired = true)
     private Integer challenge;
 //    @RpgSystemOption(name = "explode", shortcode = "x", description = "7thsea.options.explode")
 //    private boolean explode;
