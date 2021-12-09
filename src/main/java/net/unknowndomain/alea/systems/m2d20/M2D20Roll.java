@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import net.unknowndomain.alea.random.SingleResult;
 import net.unknowndomain.alea.random.dice.DicePool;
@@ -39,13 +40,14 @@ public class M2D20Roll implements GenericRoll
     private final int focus;
     private final int determination;
     private final List<Integer> assistants;
+    private final Locale lang;
     
-    public M2D20Roll(Integer targetNumber, Integer focus, Integer bonus, Integer determination, List<Integer> assistants, M2D20Modifiers ... mod)
+    public M2D20Roll(Locale lang, Integer targetNumber, Integer focus, Integer bonus, Integer determination, List<Integer> assistants, M2D20Modifiers ... mod)
     {
-        this(targetNumber, focus, bonus, determination, assistants, Arrays.asList(mod));
+        this(lang, targetNumber, focus, bonus, determination, assistants, Arrays.asList(mod));
     }
     
-    public M2D20Roll(Integer targetNumber, Integer focus, Integer bonus, Integer determination, List<Integer> assistants, Collection<M2D20Modifiers> mod)
+    public M2D20Roll(Locale lang, Integer targetNumber, Integer focus, Integer bonus, Integer determination, List<Integer> assistants, Collection<M2D20Modifiers> mod)
     {
         
         this.mods = new HashSet<>();
@@ -95,6 +97,7 @@ public class M2D20Roll implements GenericRoll
         this.focus = f;
         this.targetNumber = targetNumber;
         this.assistants = assistants;
+        this.lang = lang;
     }
     
     @Override
@@ -139,6 +142,7 @@ public class M2D20Roll implements GenericRoll
             }
         }
         results.setVerbose(mods.contains(M2D20Modifiers.VERBOSE));
+        results.setLang(lang);
         return results;
     }
     

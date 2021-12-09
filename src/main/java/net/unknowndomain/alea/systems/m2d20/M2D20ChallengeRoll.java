@@ -15,11 +15,11 @@
  */
 package net.unknowndomain.alea.systems.m2d20;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import net.unknowndomain.alea.random.SingleResult;
 import net.unknowndomain.alea.random.dice.DicePool;
@@ -36,13 +36,14 @@ public class M2D20ChallengeRoll implements GenericRoll
     
     private final DicePool<D6> dicePool;
     private final Set<M2D20Modifiers> mods;
+    private final Locale lang;
     
-    public M2D20ChallengeRoll(Integer diceNumber, M2D20Modifiers ... mod)
+    public M2D20ChallengeRoll(Locale lang, Integer diceNumber, M2D20Modifiers ... mod)
     {
-        this(diceNumber, Arrays.asList(mod));
+        this(lang, diceNumber, Arrays.asList(mod));
     }
     
-    public M2D20ChallengeRoll(Integer diceNumber, Collection<M2D20Modifiers> mod)
+    public M2D20ChallengeRoll(Locale lang, Integer diceNumber, Collection<M2D20Modifiers> mod)
     {
         
         this.mods = new HashSet<>();
@@ -52,6 +53,7 @@ public class M2D20ChallengeRoll implements GenericRoll
         }
         
         this.dicePool = new DicePool<>(D6.INSTANCE, diceNumber);
+        this.lang = lang;
     }
     
     @Override
@@ -71,6 +73,7 @@ public class M2D20ChallengeRoll implements GenericRoll
             }
         }
         results.setVerbose(mods.contains(M2D20Modifiers.VERBOSE));
+        results.setLang(lang);
         return results;
     }
     

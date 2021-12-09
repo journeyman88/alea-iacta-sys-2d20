@@ -22,14 +22,16 @@ import java.util.Collections;
 import java.util.List;
 import net.unknowndomain.alea.messages.MsgBuilder;
 import net.unknowndomain.alea.random.SingleResult;
-import net.unknowndomain.alea.roll.GenericResult;
+import net.unknowndomain.alea.roll.LocalizedResult;
 
 /**
  *
  * @author journeyman
  */
-public class M2D20Results extends GenericResult
+public class M2D20Results extends LocalizedResult
 {
+    private static final String BUNDLE_NAME = "net.unknowndomain.alea.systems.m2d20.RpgSystemBundle";
+    
     private final List<SingleResult<Integer>> results;
     private int successes = 0;
     private int complication = 0;
@@ -109,22 +111,22 @@ public class M2D20Results extends GenericResult
     protected void formatResults(MsgBuilder messageBuilder, boolean verbose, int indentValue)
     {
         String indent = getIndent(indentValue);
-        messageBuilder.append(indent).append("Successes: ").append(getSuccesses()).appendNewLine();
+        messageBuilder.append(indent).append(translate("2d20.results.successes", getSuccesses())).appendNewLine();
         if (getComplication() > 0)
         {
-            messageBuilder.append(indent).append("Complications: ").append(getComplication()).appendNewLine();
+            messageBuilder.append(indent).append(translate("2d20.results.complications", getComplication())).appendNewLine();
         }
         if (verbose)
         {
             messageBuilder.append(indent).append("Roll ID: ").append(getUuid()).appendNewLine();
-            messageBuilder.append(indent).append("Results: ").append(" [ ");
+            messageBuilder.append(indent).append(translate("2d20.results.diceResults")).append(" [ ");
             for (SingleResult<Integer> t : getResults())
             {
                 messageBuilder.append("( ").append(t.getLabel()).append(" => ");
                 messageBuilder.append(t.getValue()).append(") ");
             }
             messageBuilder.append("]\n");
-            messageBuilder.append(indent).append("Assistance Results: ").append(" [ ");
+            messageBuilder.append(indent).append(translate("2d20.results.assistResults")).append(" [ ");
             for (SingleResult<Integer> t : getAssistDice())
             {
                 messageBuilder.append("( ").append(t.getLabel()).append(" => ");
@@ -133,7 +135,7 @@ public class M2D20Results extends GenericResult
             messageBuilder.append("]\n");
             if (prev != null)
             {
-                messageBuilder.append("Prev : {\n");
+                messageBuilder.append(translate("2d20.results.prevResults")).append("{\n");
                 prev.formatResults(messageBuilder, verbose, indentValue + 4);
                 messageBuilder.append("}\n");
             }
@@ -153,6 +155,12 @@ public class M2D20Results extends GenericResult
     public void setAssistDice(List<SingleResult<Integer>> assistDice)
     {
         this.assistDice = assistDice;
+    }
+
+    @Override
+    protected String getBundleName()
+    {
+        return BUNDLE_NAME;
     }
 
 }

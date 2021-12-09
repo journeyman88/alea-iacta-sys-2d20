@@ -65,11 +65,11 @@ public class M2D20Command extends RpgSystemCommand
             GenericRoll roll;
             if (opt.isChallenge())
             {
-                roll = new M2D20ChallengeRoll(opt.getChallenge(), opt.getModifiers());
+                roll = new M2D20ChallengeRoll(lang, opt.getChallenge(), opt.getModifiers());
             }
             else
             {
-                roll  = new M2D20Roll(opt.getTarget(), opt.getFocus(), opt.getBonus(), opt.getDetermination(), opt.parseAssistants(), opt.getModifiers());
+                roll  = new M2D20Roll(lang, opt.getTarget(), opt.getFocus(), opt.getBonus(), opt.getDetermination(), opt.parseAssistants(), opt.getModifiers());
             }
             retVal = Optional.of(roll);
         }

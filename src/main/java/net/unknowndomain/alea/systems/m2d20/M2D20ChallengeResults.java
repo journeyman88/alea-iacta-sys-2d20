@@ -20,14 +20,17 @@ import java.util.Collections;
 import java.util.List;
 import net.unknowndomain.alea.messages.MsgBuilder;
 import net.unknowndomain.alea.random.SingleResult;
-import net.unknowndomain.alea.roll.GenericResult;
+import net.unknowndomain.alea.roll.LocalizedResult;
 
 /**
  *
  * @author journeyman
  */
-public class M2D20ChallengeResults extends GenericResult
+public class M2D20ChallengeResults extends LocalizedResult
 {
+    
+    private static final String BUNDLE_NAME = "net.unknowndomain.alea.systems.m2d20.RpgSystemBundle";
+    
     private final List<SingleResult<Integer>> results;
     private int value = 0;
     private int effects = 0;
@@ -74,15 +77,15 @@ public class M2D20ChallengeResults extends GenericResult
     protected void formatResults(MsgBuilder messageBuilder, boolean verbose, int indentValue)
     {
         String indent = getIndent(indentValue);
-        messageBuilder.append(indent).append("Result: ").append(getValue()).appendNewLine();
+        messageBuilder.append(indent).append(translate("2d20.results.total", getValue())).appendNewLine();
         if (getEffects() > 0)
         {
-            messageBuilder.append(indent).append("Effects: ").append(getEffects()).appendNewLine();
+            messageBuilder.append(indent).append(translate("2d20.results.total", getEffects())).appendNewLine();
         }
         if (verbose)
         {
             messageBuilder.append(indent).append("Roll ID: ").append(getUuid()).appendNewLine();
-            messageBuilder.append(indent).append("Results: ").append(" [ ");
+            messageBuilder.append(indent).append(translate("2d20.results.diceResults")).append(" [ ");
             for (SingleResult<Integer> t : getResults())
             {
                 messageBuilder.append("( ").append(t.getLabel()).append(" => ");
@@ -91,7 +94,7 @@ public class M2D20ChallengeResults extends GenericResult
             messageBuilder.append("]\n");
             if (prev != null)
             {
-                messageBuilder.append("Prev : {\n");
+                messageBuilder.append(translate("2d20.results.prevResults")).append("{\n");
                 prev.formatResults(messageBuilder, verbose, indentValue + 4);
                 messageBuilder.append("}\n");
             }
@@ -106,6 +109,12 @@ public class M2D20ChallengeResults extends GenericResult
     public void setEffects(int effects)
     {
         this.effects = effects;
+    }
+
+    @Override
+    protected String getBundleName()
+    {
+        return BUNDLE_NAME;
     }
 
 }
