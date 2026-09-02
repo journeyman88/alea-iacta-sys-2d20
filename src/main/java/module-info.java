@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-module net.unknowndomain.alea.systems.m2d20 {
+module net.unknowndomain.alea.systems.m2d20system {
     requires net.unknowndomain.alea.core;
     requires org.slf4j;
     requires static lombok;
