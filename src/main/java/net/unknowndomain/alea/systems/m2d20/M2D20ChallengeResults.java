@@ -80,7 +80,7 @@ public class M2D20ChallengeResults extends LocalizedResult
         messageBuilder.append(indent).append(translate("2d20.results.total", getValue())).appendNewLine();
         if (getEffects() > 0)
         {
-            messageBuilder.append(indent).append(translate("2d20.results.total", getEffects())).appendNewLine();
+            messageBuilder.append(indent).append(translate("2d20.results.effects", getEffects())).appendNewLine();
         }
         if (verbose)
         {

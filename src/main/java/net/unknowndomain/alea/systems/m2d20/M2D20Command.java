@@ -17,26 +17,21 @@ package net.unknowndomain.alea.systems.m2d20;
 
 import java.util.Locale;
 import java.util.Optional;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.unknowndomain.alea.systems.RpgSystemCommand;
 import net.unknowndomain.alea.systems.RpgSystemDescriptor;
 import net.unknowndomain.alea.roll.GenericRoll;
 import net.unknowndomain.alea.systems.RpgSystemOptions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  *
  * @author journeyman
  */
+@Slf4j
+@NoArgsConstructor
 public class M2D20Command extends RpgSystemCommand
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(M2D20Command.class);
     private static final RpgSystemDescriptor DESC = new RpgSystemDescriptor("2d20 System", "2d20", "2d20-system");
-    
-    public M2D20Command()
-    {
-        
-    }
     
     @Override
     public RpgSystemDescriptor getCommandDesc()
@@ -44,12 +39,6 @@ public class M2D20Command extends RpgSystemCommand
         return DESC;
     }
 
-    @Override
-    protected Logger getLogger()
-    {
-        return LOGGER;
-    }
-    
     @Override
     protected Optional<GenericRoll> safeCommand(RpgSystemOptions options, Locale lang)
     {

@@ -5,7 +5,6 @@
  */
 package net.unknowndomain.alea.systems.m2d20;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;

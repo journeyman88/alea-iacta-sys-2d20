@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 journeyman.
+ * Copyright 2025 m.bignami.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.unknowndomain.alea.systems.m2d20;
 
-/**
- *
- * @author journeyman
- */
-public enum M2D20Modifiers
-{
-    VERBOSE,
-    ONE_NOT_AUTOCRIT
+module net.unknowndomain.alea.systems.m2d20 {
+    requires net.unknowndomain.alea.core;
+    requires org.slf4j;
+    requires static lombok;
+    opens net.unknowndomain.alea.systems.m2d20 to net.unknowndomain.alea.core;
+    provides net.unknowndomain.alea.systems.RpgSystemCommand with net.unknowndomain.alea.systems.m2d20.M2D20Command;
 }
