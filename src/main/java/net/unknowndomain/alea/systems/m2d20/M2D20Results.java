@@ -23,21 +23,23 @@ import java.util.List;
 import net.unknowndomain.alea.messages.MsgBuilder;
 import net.unknowndomain.alea.random.SingleResult;
 import net.unknowndomain.alea.roll.LocalizedResult;
+import net.unknowndomain.alea.systems.annotations.RpgSystemResult;
 
 /**
  *
  * @author journeyman
  */
+@RpgSystemResult(typeId = "2d20-standard")
 public class M2D20Results extends LocalizedResult
 {
     private static final String BUNDLE_NAME = "net.unknowndomain.alea.systems.m2d20.RpgSystemBundle";
-    
-    private final List<SingleResult<Integer>> results;
-    private int successes = 0;
-    private int complication = 0;
-    private List<SingleResult<Integer>> successDice = new ArrayList<>();
-    private List<SingleResult<Integer>> assistDice = new ArrayList<>();
-    private M2D20Results prev;
+
+    final List<SingleResult<Integer>> results;
+    int successes = 0;
+    int complication = 0;
+    List<SingleResult<Integer>> successDice = new ArrayList<>();
+    List<SingleResult<Integer>> assistDice = new ArrayList<>();
+    M2D20Results prev;
     
     public M2D20Results(List<SingleResult<Integer>> results)
     {
@@ -122,15 +124,15 @@ public class M2D20Results extends LocalizedResult
             messageBuilder.append(indent).append(translate("2d20.results.diceResults")).append(" [ ");
             for (SingleResult<Integer> t : getResults())
             {
-                messageBuilder.append("( ").append(t.getLabel()).append(" => ");
-                messageBuilder.append(t.getValue()).append(") ");
+                messageBuilder.append("( ").append(t.label()).append(" => ");
+                messageBuilder.append(t.value()).append(") ");
             }
             messageBuilder.append("]\n");
             messageBuilder.append(indent).append(translate("2d20.results.assistResults")).append(" [ ");
             for (SingleResult<Integer> t : getAssistDice())
             {
-                messageBuilder.append("( ").append(t.getLabel()).append(" => ");
-                messageBuilder.append(t.getValue()).append(") ");
+                messageBuilder.append("( ").append(t.label()).append(" => ");
+                messageBuilder.append(t.value()).append(") ");
             }
             messageBuilder.append("]\n");
             if (prev != null)
@@ -161,6 +163,11 @@ public class M2D20Results extends LocalizedResult
     protected String getBundleName()
     {
         return BUNDLE_NAME;
+    }
+
+    void restoreUuid(String uuid)
+    {
+        setUuid(uuid);
     }
 
 }

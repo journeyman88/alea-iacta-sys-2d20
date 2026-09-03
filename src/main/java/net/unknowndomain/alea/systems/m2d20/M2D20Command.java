@@ -23,6 +23,7 @@ import net.unknowndomain.alea.systems.RpgSystemCommand;
 import net.unknowndomain.alea.systems.RpgSystemDescriptor;
 import net.unknowndomain.alea.roll.GenericRoll;
 import net.unknowndomain.alea.systems.RpgSystemOptions;
+import net.unknowndomain.alea.systems.option.RpgSystemParser;
 /**
  *
  * @author journeyman
@@ -66,9 +67,16 @@ public class M2D20Command extends RpgSystemCommand
     }
 
     @Override
-    public RpgSystemOptions buildOptions()
+    public M2D20Options buildOptions()
     {
         return new M2D20Options();
     }
+
+    @Override
+    protected RpgSystemParser systemParser()
+    {
+        return new M2D20OptionsParser();
+    }
+
     
 }

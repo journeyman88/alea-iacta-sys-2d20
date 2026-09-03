@@ -111,15 +111,15 @@ public class M2D20Roll implements GenericRoll
         M2D20Results results = new M2D20Results(resultsPool);
         for (SingleResult<Integer> r : resultsPool)
         {
-            if ((r.getValue() <= targetNumber) && ( r.getValue() > focus))
+            if ((r.value() <= targetNumber) && ( r.value() > focus))
             {
                 results.addSuccess(r);
             }
-            if ((r.getValue() <= targetNumber) && ( r.getValue() <= focus))
+            if ((r.value() <= targetNumber) && ( r.value() <= focus))
             {
                 results.addCriticalSuccess(r);
             }
-            if (r.getValue() == 20)
+            if (r.value() == 20)
             {
                 results.addComplication();
             }
@@ -131,11 +131,11 @@ public class M2D20Roll implements GenericRoll
             {
                 SingleResult<Integer> r = D20.INSTANCE.nextResult().get();
                 results.getAssistDice().add(r);
-                if (r.getValue() <= ta)
+                if (r.value() <= ta)
                 {
                     results.addSuccess(r);
                 }
-                if (r.getValue() == 20)
+                if (r.value() == 20)
                 {
                     results.addComplication();
                 }

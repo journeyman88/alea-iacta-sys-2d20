@@ -23,19 +23,19 @@ import net.unknowndomain.alea.systems.annotations.RpgSystemOption;
 public class M2D20Options extends RpgSystemOptions
 {
     @RpgSystemOption(name = "target", shortcode = "t", description = "2d20.options.targetNumber", argName = "targetNumber", groupName = "skill", groupRequired = true)
-    private Integer target;
+    Integer target;
     @RpgSystemOption(name = "focus", shortcode = "f", description = "2d20.options.focus", argName = "focusValue", groupName = "skill")
-    private Integer focus;
+    Integer focus;
     @RpgSystemOption(name = "bonus", shortcode = "b", description = "2d20.options.bonus", argName = "bonusDice", groupName = "skill")
-    private Integer bonus;
+    Integer bonus;
     @RpgSystemOption(name = "old", shortcode = "o", description = "2d20.options.oldMode", groupName = "skill")
-    private boolean oldMode;
+    boolean oldMode;
     @RpgSystemOption(name = "assistant", shortcode = "a", description = "2d20.options.assistant", argName = "assistantTarget", groupName = "skill")
-    private List<String> assistants;
+    List<String> assistants;
     @RpgSystemOption(name = "determination", shortcode = "d", description = "2d20.options.determination", argName = "determinationSpent", groupName = "skill")
-    private Integer determination;
+    Integer determination;
     @RpgSystemOption(name = "challenge", shortcode = "c", description = "2d20.options.challenge", groupName = "challenge", groupRequired = true)
-    private Integer challenge;
+    Integer challenge;
 //    @RpgSystemOption(name = "explode", shortcode = "x", description = "7thsea.options.explode")
 //    private boolean explode;
     

@@ -20,4 +20,7 @@ module net.unknowndomain.alea.systems.m2d20system {
     requires static lombok;
     opens net.unknowndomain.alea.systems.m2d20 to net.unknowndomain.alea.core;
     provides net.unknowndomain.alea.systems.RpgSystemCommand with net.unknowndomain.alea.systems.m2d20.M2D20Command;
+    provides net.unknowndomain.alea.systems.results.ResultCodec with
+        net.unknowndomain.alea.systems.m2d20.M2D20ResultsCodec,
+        net.unknowndomain.alea.systems.m2d20.M2D20ChallengeResultsCodec;
 }

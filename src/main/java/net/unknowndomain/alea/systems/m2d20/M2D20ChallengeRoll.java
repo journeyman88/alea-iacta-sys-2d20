@@ -63,11 +63,11 @@ public class M2D20ChallengeRoll implements GenericRoll
         M2D20ChallengeResults results = new M2D20ChallengeResults(resultsPool);
         for (SingleResult<Integer> r : resultsPool)
         {
-            if (r.getValue() <= 2)
+            if (r.value() <= 2)
             {
-                results.addValue(r.getValue());
+                results.addValue(r.value());
             }
-            if (r.getValue() >= 5)
+            if (r.value() >= 5)
             {
                 results.addOneAndEffect();
             }
